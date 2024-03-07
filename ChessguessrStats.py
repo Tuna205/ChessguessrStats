@@ -9,7 +9,6 @@ class ChessguessrStats:
                 return i + 1
         return -1
 
-
     def parse_squares_from_line(self, line):
         pattern = r"[🟩🟨⬜🟥]+"
         matches = re.findall(pattern, line)
@@ -32,20 +31,11 @@ class ChessguessrStats:
             return {}
 
     def main():
-
-
         with codecs.open('WhatsApp Chat with Dino Ehman.txt', encoding='utf-8') as file:
-
             lines = file.readlines()
-
             count = 0
             for line in lines:
-
                 if ('Gamedle:' in line):
-
                     gamedle = ''
-
-
-
 
 # kako exportati - csv: datum | gamedle classic | gamedle art | gamedle keywords | chessguessr
