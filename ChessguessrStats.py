@@ -15,20 +15,30 @@ class ChessguessrStats:
         if matches:
             return matches[0]
         else:
-            return ''
+            return None
 
     def parse_gamedle_line(self, line):
-        squares = self.parse_squares_from_line(line)
-        try_num = self.parse_gamedle_try(squares)
-
         if ('🕹️ Gamedle:' in line):
-            return {'Classic' : try_num}
+            return 'Classic'
         elif ('🕹️🎨 Gamedle (Artwork mode):' in line):
-            return {'Art' : try_num}
+            return 'Art'
         elif ('🕹️🔑 Gamedle (keywords mode):' in line):
-            return {'Keywords' : try_num}
+            return 'Keywords'
         else:
-            return {}
+            return None
+
+    def parse_message_header(self, line):
+        pattern = r"\d+/\d+/\d+, \d+:\d+ - \w+:"
+        matches = re.findall(pattern, line)
+        if matches:
+            split_comma = matches[0].split(',')
+            date = split_comma[0]
+            split_dash = split_comma[1].split('-')
+            time = split_dash[0].strip()
+            name = split_dash[1].strip()[:-1]
+            return (date, time, name)
+        else:
+            return None
 
     def main():
         with codecs.open('WhatsApp Chat with Dino Ehman.txt', encoding='utf-8') as file:
