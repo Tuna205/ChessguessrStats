@@ -60,23 +60,28 @@ class ChessguessrStats:
         else:
             return False
 
+    def setup_master_entry(self, parsed_header):
+        self.current_date, time, self.current_name = parsed_header
+        if self.current_name not in self.master_dict:
+            self.master_dict[self.current_name] = {}
+        if self.current_date not in self.master_dict[self.current_name]:
+            self.master_dict[self.current_name][self.current_date] = {}
+
     def main(self):
         lines = self.read_file()
         for line in lines:
             parsed_header = self.parse_message_header(line)
             if (parsed_header):
-                self.current_date, time, self.current_name = parsed_header
-                if self.current_name not in self.master_dict:
-                    self.master_dict[self.current_name] = {}
-                if self.current_date not in self.master_dict[self.current_name]:
-                    self.master_dict[self.current_name][self.current_date] = {}
+                self.setup_master_entry(parsed_header)
                 self.create_gamedle_entry(line)
             else:
                 self.create_gamedle_entry(line)
 
 stats = ChessguessrStats()
 stats.main()
-print(stats.master_dict)
+print(stats.master_dict['Dino Ehman'])
+print('########')
+print(stats.master_dict['Antun'])
 
 
 # kako exportati - csv: datum | gamedle classic | gamedle art | gamedle keywords | chessguess

@@ -26,3 +26,18 @@ class TestChessguessrStats:
         assert self.stats.parse_message_header('12/13/23, 07:49 - Antun: 🕹️ Gamedle: 13/12/2023 🟥🟥🟥🟥🟥🟩') == ('12/13/23', '07:49', 'Antun') # mm/dd/yy
         assert self.stats.parse_message_header('12/13/23, 07:49 - Dino Ehman: 🕹️ Gamedle: 13/12/2023 🟥🟥🟥🟥🟥🟩') == ('12/13/23', '07:49', 'Dino Ehman')
         assert self.stats.parse_message_header('test') == None
+
+    def test_setup_master_entry(self):
+        line = '12/13/23, 07:49 - Dino Ehman: 🕹️ Gamedle: 13/12/2023 🟥🟥🟥🟥🟥🟩'
+        self.stats.setup_master_entry(self.stats.parse_message_header(line))
+        assert self.stats.current_date == '12/13/23'
+        assert self.stats.current_name == 'Dino Ehman'
+        assert self.stats.master_dict == { 'Dino Ehman' : { '12/13/23' : {}}}
+
+    def test_create_gamedle_entry(self):
+        line = '12/13/23, 07:49 - Dino Ehman: 🕹️ Gamedle: 13/12/2023 🟥🟥🟥🟥🟥🟩'
+        parsed_header = self.stats.parse_message_header(line)
+        self.stats.setup_master_entry(self.stats.parse_message_header(line))
+        assert self.stats.create_gamedle_entry(line) == True
+        assert self.stats.master_dict == {'Dino Ehman' : {'12/13/23' : { 'Classic' : 6}} }
+        assert self.stats.create_gamedle_entry('test') == False
