@@ -24,4 +24,5 @@ class TestChessguessrStats:
 
     def test_parse_message_header(self):
         assert self.stats.parse_message_header('12/13/23, 07:49 - Antun: 🕹️ Gamedle: 13/12/2023 🟥🟥🟥🟥🟥🟩') == ('12/13/23', '07:49', 'Antun') # mm/dd/yy
+        assert self.stats.parse_message_header('12/13/23, 07:49 - Dino Ehman: 🕹️ Gamedle: 13/12/2023 🟥🟥🟥🟥🟥🟩') == ('12/13/23', '07:49', 'Dino Ehman')
         assert self.stats.parse_message_header('test') == None

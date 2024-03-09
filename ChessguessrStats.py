@@ -3,6 +3,11 @@ import re
 
 
 class ChessguessrStats:
+    def __init__(self):
+        self.current_name = ''
+        self.current_date = ''
+        self.master_dict = {}
+
     def parse_gamedle_try(self, squares):
         for i, square in enumerate(squares):
             if square == '🟩':
@@ -28,7 +33,7 @@ class ChessguessrStats:
             return None
 
     def parse_message_header(self, line):
-        pattern = r"\d+/\d+/\d+, \d+:\d+ - \w+:"
+        pattern = r"\d+/\d+/\d+, \d+:\d+ - [\w ]+:"
         matches = re.findall(pattern, line)
         if matches:
             split_comma = matches[0].split(',')
@@ -40,12 +45,38 @@ class ChessguessrStats:
         else:
             return None
 
-    def main():
-        with codecs.open('WhatsApp Chat with Dino Ehman.txt', encoding='utf-8') as file:
+    def read_file(self):
+        with codecs.open('data/WhatsApp Chat with Dino Ehman.txt', encoding='utf-8') as file:
             lines = file.readlines()
-            count = 0
-            for line in lines:
-                if ('Gamedle:' in line):
-                    gamedle = ''
+            return lines
 
-# kako exportati - csv: datum | gamedle classic | gamedle art | gamedle keywords | chessguessr
+    def create_gamedle_entry(self, line):
+        gamedle_type = self.parse_gamedle_line(line)
+        if gamedle_type:
+            squares = self.parse_squares_from_line(line)
+            try_num = self.parse_gamedle_try(squares)             
+            self.master_dict[self.current_name][self.current_date][gamedle_type] =  try_num
+            return True
+        else:
+            return False
+
+    def main(self):
+        lines = self.read_file()
+        for line in lines:
+            parsed_header = self.parse_message_header(line)
+            if (parsed_header):
+                self.current_date, time, self.current_name = parsed_header
+                if self.current_name not in self.master_dict:
+                    self.master_dict[self.current_name] = {}
+                if self.current_date not in self.master_dict[self.current_name]:
+                    self.master_dict[self.current_name][self.current_date] = {}
+                self.create_gamedle_entry(line)
+            else:
+                self.create_gamedle_entry(line)
+
+stats = ChessguessrStats()
+stats.main()
+print(stats.master_dict)
+
+
+# kako exportati - csv: datum | gamedle classic | gamedle art | gamedle keywords | chessguess
