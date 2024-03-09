@@ -69,7 +69,10 @@ class ChessguessrStats:
             self.master_dict[self.current_name][self.current_date] = {}
 
     def create_dataframe(self):
-        return pd.DataFrame(self.master_dict)
+        df_dict = {}
+        for player, stats in self.master_dict.items():
+            df_dict[player] = pd.DataFrame(stats).T
+        return df_dict
 
     def export_to_excell(self, file_name):
         df = self.create_dataframe()
@@ -90,5 +93,7 @@ stats.main()
 print(stats.master_dict['Dino Ehman'])
 print('########')
 print(stats.master_dict['Antun'])
-df = stats.create_dataframe()
+dfs = stats.create_dataframe()
+antun_df = dfs['Antun']
+dino_df = dfs['Dino Ehman']
 a = 0
