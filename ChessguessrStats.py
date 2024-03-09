@@ -1,5 +1,6 @@
 import codecs
 import re
+import pandas as pd
 
 
 class ChessguessrStats:
@@ -67,6 +68,13 @@ class ChessguessrStats:
         if self.current_date not in self.master_dict[self.current_name]:
             self.master_dict[self.current_name][self.current_date] = {}
 
+    def create_dataframe(self):
+        return pd.DataFrame(self.master_dict)
+
+    def export_to_excell(self, file_name):
+        df = self.create_dataframe()
+        df.to_excel(file_name)
+
     def main(self):
         lines = self.read_file()
         for line in lines:
@@ -82,6 +90,5 @@ stats.main()
 print(stats.master_dict['Dino Ehman'])
 print('########')
 print(stats.master_dict['Antun'])
-
-
-# kako exportati - csv: datum | gamedle classic | gamedle art | gamedle keywords | chessguess
+df = stats.create_dataframe()
+a = 0

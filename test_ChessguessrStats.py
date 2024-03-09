@@ -41,3 +41,5 @@ class TestChessguessrStats:
         assert self.stats.create_gamedle_entry(line) == True
         assert self.stats.master_dict == {'Dino Ehman' : {'12/13/23' : { 'Classic' : 6}} }
         assert self.stats.create_gamedle_entry('test') == False
+
+# kako exportati - csv: datum | gamedle classic | gamedle art | gamedle keywords | chessguess   
