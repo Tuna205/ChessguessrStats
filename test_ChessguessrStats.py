@@ -42,4 +42,12 @@ class TestChessguessrStats:
         assert self.stats.master_dict == {'Dino Ehman' : {'12/13/23' : { 'Classic' : 6}} }
         assert self.stats.create_gamedle_entry('test') == False
 
+    def test_clean_master_dict(self):
+        master_dict_mock = {'Antun' : {'2/12/22': {}, '7/19/22': {}, '9/11/22': {}, '12/1/23': {'Classic': 1}, '12/2/23': {'Art' : 2}}}
+        self.stats.master_dict = master_dict_mock
+        self.stats.clean_master_dict()
+        assert self.stats.master_dict == {'Antun' : {'12/1/23': {'Classic': 1}, '12/2/23': {'Art' : 2}}}
+
+        
+
 # kako exportati - csv: datum | gamedle classic | gamedle art | gamedle keywords | chessguess   

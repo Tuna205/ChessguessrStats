@@ -74,9 +74,22 @@ class ChessguessrStats:
             df_dict[player] = pd.DataFrame(stats).T
         return df_dict
 
-    def export_to_excell(self, file_name):
-        df = self.create_dataframe()
-        df.to_excel(file_name)
+    def export_to_excel(self, file_name):
+        master_df = self.create_dataframe()
+        writer = pd.ExcelWriter(file_name, engine='xlsxwriter')
+        for sheet_name, df in master_df.items():
+            df.to_excel(writer, sheet_name=sheet_name, index=False)
+        writer.close()
+
+    def clean_master_dict(self):
+        for_deletion = []
+        for player, sub_dict in self.master_dict.items():
+            for date, scores in sub_dict.items():
+                if scores == {}:
+                    for_deletion.append((player, date))
+        
+        for player, date in for_deletion:
+            del self.master_dict[player][date]
 
     def main(self):
         lines = self.read_file()
@@ -87,6 +100,7 @@ class ChessguessrStats:
                 self.create_gamedle_entry(line)
             else:
                 self.create_gamedle_entry(line)
+        self.clean_master_dict()
 
 stats = ChessguessrStats()
 stats.main()
@@ -96,4 +110,4 @@ print(stats.master_dict['Antun'])
 dfs = stats.create_dataframe()
 antun_df = dfs['Antun']
 dino_df = dfs['Dino Ehman']
-a = 0
+stats.export_to_excel("test_export.xlsx")
