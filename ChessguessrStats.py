@@ -1,19 +1,22 @@
 import codecs
 import re
 import pandas as pd
-
+import matplotlib
+matplotlib.use('QtAgg')
+import matplotlib.pyplot as plt
 
 class ChessguessrStats:
     def __init__(self):
         self.current_name = ''
         self.current_date = ''
         self.master_dict = {}
+        self.FAILED_TRY = 10
 
     def parse_gamedle_try(self, squares):
         for i, square in enumerate(squares):
             if square == '🟩':
                 return i + 1
-        return -1
+        return self.FAILED_TRY
 
     def parse_squares_from_line(self, line):
         pattern = r"[🟩🟨⬜🟥]+"
@@ -91,6 +94,26 @@ class ChessguessrStats:
         for player, date in for_deletion:
             del self.master_dict[player][date]
 
+    def calculate_all_playing_dates(self):
+        dates = []
+        for player, sub_dict in self.master_dict.items():
+            for date in sub_dict:
+                dates.append(date)
+        return list(dict.fromkeys(dates))
+
+    def create_graph(self):
+        df_dict = self.create_dataframe()
+        fig, ax = plt.subplots()
+        dates = self.calculate_all_playing_dates()
+        dates_index = pd.Index(dates)
+        for player, df in df_dict.items():
+            ax.bar(df.index, df["Classic"]) # TODO use dates_index, wrong shape for dataframe
+            # plt.title(player)
+        ax.set_xlabel("Date")
+        ax.set_ylabel("Tries")
+        ax.legend()
+        plt.show()
+
     def main(self):
         lines = self.read_file()
         for line in lines:
@@ -104,10 +127,14 @@ class ChessguessrStats:
 
 stats = ChessguessrStats()
 stats.main()
-print(stats.master_dict['Dino Ehman'])
-print('########')
-print(stats.master_dict['Antun'])
+# print(stats.master_dict['Dino Ehman'])
+# print('########')
+# print(stats.master_dict['Antun'])
 dfs = stats.create_dataframe()
 antun_df = dfs['Antun']
 dino_df = dfs['Dino Ehman']
-stats.export_to_excel("test_export.xlsx")
+# stats.export_to_excel("test_export.xlsx")
+# print(plt.matplotlib_fname())
+stats.create_graph()
+
+### todo expot date to excell, vjerojatno treba samo exportati index

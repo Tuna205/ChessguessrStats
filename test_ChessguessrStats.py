@@ -6,7 +6,7 @@ class TestChessguessrStats:
         self.stats = ChessguessrStats()
 
     def test_parse_gamedle_try(self):
-        assert self.stats.parse_gamedle_try('🟥🟥🟥🟥🟥🟥') == -1
+        assert self.stats.parse_gamedle_try('🟥🟥🟥🟥🟥🟥') == self.stats.FAILED_TRY
         assert self.stats.parse_gamedle_try('🟩⬜⬜⬜⬜⬜') == 1
         assert self.stats.parse_gamedle_try('🟥🟥🟩⬜⬜⬜') == 3
 
