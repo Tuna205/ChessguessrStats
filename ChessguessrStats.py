@@ -4,6 +4,13 @@ import pandas as pd
 import matplotlib
 matplotlib.use('QtAgg')
 import matplotlib.pyplot as plt
+from datetime import datetime, timedelta
+
+class GameMode():
+    Classic = 'Classic'
+    Art = 'Art'
+    Keywords = 'Keywords'
+    Chessguessr = 'Chessguessr'
 
 class ChessguessrStats:
     def __init__(self):
@@ -28,20 +35,24 @@ class ChessguessrStats:
 
     def parse_gamedle_line(self, line):
         if ('🕹️ Gamedle:' in line):
-            return 'Classic'
+            return GameMode.Classic
         elif ('🕹️🎨 Gamedle (Artwork mode):' in line):
-            return 'Art'
+            return GameMode.Art
         elif ('🕹️🔑 Gamedle (keywords mode):' in line):
-            return 'Keywords'
+            return GameMode.Keywords
         else:
             return None
+
+    def to_date(self, date_str):
+        date = datetime.strptime(date_str, '%m/%d/%y')
+        return date
 
     def parse_message_header(self, line):
         pattern = r"\d+/\d+/\d+, \d+:\d+ - [\w ]+:"
         matches = re.findall(pattern, line)
         if matches:
             split_comma = matches[0].split(',')
-            date = split_comma[0]
+            date = self.to_date(split_comma[0])
             split_dash = split_comma[1].split('-')
             time = split_dash[0].strip()
             name = split_dash[1].strip()[:-1]
@@ -94,16 +105,22 @@ class ChessguessrStats:
         for player, date in for_deletion:
             del self.master_dict[player][date]
 
-    def create_graph(self):
+    def create_graph(self, game_mode):
         df_dict = self.create_dataframe()
+
         fig, ax = plt.subplots()
-        dates = self.calculate_all_playing_dates()
-        dates_index = pd.Index(dates)
+        width = 0.2
+        day_width = timedelta(days=width)
+
+        i = 0
         for player, df in df_dict.items():
-            ax.bar(df.index, df["Classic"]) # TODO use dates_index, wrong shape for dataframe
-            # plt.title(player)
-        ax.set_xlabel("Date")
-        ax.set_ylabel("Tries")
+            ax.bar(df.index + day_width * i, df[game_mode], label=player, width=width)
+            i += 1
+        
+
+        plt.title(game_mode)
+        ax.set_xlabel('Date')
+        ax.set_ylabel('Tries')
         ax.legend()
         plt.show()
 
@@ -119,7 +136,7 @@ class ChessguessrStats:
         for player, sub_dict in self.master_dict.items():
             for date in dates:
                 if date not in sub_dict:
-                    sub_dict[date] = {'Classic' : 0, 'Art' : 0, 'Keywords' : 0, 'Chessguesser' : 0} 
+                    sub_dict[date] = {GameMode.Classic : 0, GameMode.Art : 0, GameMode.Keywords : 0, GameMode.Chessguessr : 0} 
 
     def main(self):
         lines = self.read_file()
@@ -143,6 +160,9 @@ antun_df = dfs['Antun']
 dino_df = dfs['Dino Ehman']
 # stats.export_to_excel("test_export.xlsx")
 # print(plt.matplotlib_fname())
-stats.create_graph()
+stats.create_graph(GameMode.Classic)
+stats.create_graph(GameMode.Art)
+stats.create_graph(GameMode.Keywords)
+
 
 ### todo expot date to excell, vjerojatno treba samo exportati index
