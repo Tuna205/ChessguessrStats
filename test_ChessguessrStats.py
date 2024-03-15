@@ -48,6 +48,14 @@ class TestChessguessrStats:
         self.stats.clean_master_dict()
         assert self.stats.master_dict == {'Antun' : {'12/1/23': {'Classic': 1}, '12/2/23': {'Art' : 2}}}
 
+    def test_unify_dates(self):
+        master_dict_mock = {'Antun' : { '9/11/22': {'Art' : 1}, '12/1/23': {'Classic': 1}, '12/2/23': {'Art' : 2}},
+                            'Dino Ehman' : {'2/12/22': {'Art' : 2}, '7/19/22': {'Art' : 3}, '12/1/23': {'Classic': 1}, '12/2/23': {'Art' : 2}}}
+        self.stats.master_dict = master_dict_mock
+        self.stats.unify_dates()
+        assert len(self.stats.master_dict['Antun']) == len(self.stats.master_dict['Dino Ehman'])
+        assert self.stats.master_dict['Antun'].keys() == self.stats.master_dict['Dino Ehman'].keys()
+
         
 
 # kako exportati - csv: datum | gamedle classic | gamedle art | gamedle keywords | chessguess   

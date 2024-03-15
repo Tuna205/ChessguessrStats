@@ -94,13 +94,6 @@ class ChessguessrStats:
         for player, date in for_deletion:
             del self.master_dict[player][date]
 
-    def calculate_all_playing_dates(self):
-        dates = []
-        for player, sub_dict in self.master_dict.items():
-            for date in sub_dict:
-                dates.append(date)
-        return list(dict.fromkeys(dates))
-
     def create_graph(self):
         df_dict = self.create_dataframe()
         fig, ax = plt.subplots()
@@ -114,6 +107,20 @@ class ChessguessrStats:
         ax.legend()
         plt.show()
 
+    def calculate_all_playing_dates(self):
+        dates = []
+        for player, sub_dict in self.master_dict.items():
+            for date in sub_dict:
+                dates.append(date)
+        return list(dict.fromkeys(dates))
+
+    def unify_dates(self):
+        dates = self.calculate_all_playing_dates()
+        for player, sub_dict in self.master_dict.items():
+            for date in dates:
+                if date not in sub_dict:
+                    sub_dict[date] = {'Classic' : 0, 'Art' : 0, 'Keywords' : 0, 'Chessguesser' : 0} 
+
     def main(self):
         lines = self.read_file()
         for line in lines:
@@ -124,6 +131,7 @@ class ChessguessrStats:
             else:
                 self.create_gamedle_entry(line)
         self.clean_master_dict()
+        self.unify_dates()
 
 stats = ChessguessrStats()
 stats.main()
