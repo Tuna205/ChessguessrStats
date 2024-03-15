@@ -116,7 +116,6 @@ class ChessguessrStats:
         for player, df in df_dict.items():
             ax.bar(df.index + day_width * i, df[game_mode], label=player, width=width)
             i += 1
-        
 
         plt.title(game_mode)
         ax.set_xlabel('Date')
@@ -138,31 +137,43 @@ class ChessguessrStats:
                 if date not in sub_dict:
                     sub_dict[date] = {GameMode.Classic : 0, GameMode.Art : 0, GameMode.Keywords : 0, GameMode.Chessguessr : 0} 
 
+    def parse_chessguessr_line(self, line):
+        pattern = r"\w*Chessguessr #\d+ ./\d"
+        matches = re.findall(pattern, line)
+        if matches:
+            match = matches[0]
+            split_space = match.split(' ')
+            try_num = split_space[-1].split('/')[0]
+            if try_num == 'X':
+                try_num = self.FAILED_TRY
+            return int(try_num)
+        else:
+            return None
+        
+    def create_chessguessr_entry(self, try_num):
+        self.master_dict[self.current_name][self.current_date][GameMode.Chessguessr] =  try_num
+
     def main(self):
         lines = self.read_file()
         for line in lines:
             parsed_header = self.parse_message_header(line)
             if (parsed_header):
                 self.setup_master_entry(parsed_header)
-                self.create_gamedle_entry(line)
-            else:
-                self.create_gamedle_entry(line)
+            success = self.create_gamedle_entry(line)
+            if not success:
+                try_num = self.parse_chessguessr_line(line)
+                if try_num != None:
+                    self.create_chessguessr_entry(try_num)
+        
         self.clean_master_dict()
         self.unify_dates()
 
 stats = ChessguessrStats()
 stats.main()
-# print(stats.master_dict['Dino Ehman'])
-# print('########')
-# print(stats.master_dict['Antun'])
-dfs = stats.create_dataframe()
-antun_df = dfs['Antun']
-dino_df = dfs['Dino Ehman']
-# stats.export_to_excel("test_export.xlsx")
-# print(plt.matplotlib_fname())
-stats.create_graph(GameMode.Classic)
-stats.create_graph(GameMode.Art)
-stats.create_graph(GameMode.Keywords)
+# stats.create_graph(GameMode.Classic)
+# stats.create_graph(GameMode.Art)
+# stats.create_graph(GameMode.Keywords)
+stats.create_graph(GameMode.Chessguessr)
 
 
 ### todo expot date to excell, vjerojatno treba samo exportati index

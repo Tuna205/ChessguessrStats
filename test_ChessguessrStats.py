@@ -56,6 +56,11 @@ class TestChessguessrStats:
         assert len(self.stats.master_dict['Antun']) == len(self.stats.master_dict['Dino Ehman'])
         assert self.stats.master_dict['Antun'].keys() == self.stats.master_dict['Dino Ehman'].keys()
 
+    def test_parse_chessguessr_line(self):
+        assert self.stats.parse_chessguessr_line('12/27/23, 12:11 - Dino Ehman: Chessguessr #554 3/5') == 3
+        assert self.stats.parse_chessguessr_line('12/27/23, 12:11 - Dino Ehman: Chessguessr #554 X/5') == self.stats.FAILED_TRY
+        assert self.stats.parse_chessguessr_line('test') == None
+
         
 
 # kako exportati - csv: datum | gamedle classic | gamedle art | gamedle keywords | chessguess   
