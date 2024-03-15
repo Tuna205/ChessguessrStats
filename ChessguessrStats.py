@@ -60,8 +60,8 @@ class ChessguessrStats:
         else:
             return None
 
-    def read_file(self):
-        with codecs.open('data/WhatsApp Chat with Dino Ehman.txt', encoding='utf-8') as file:
+    def read_file(self, file_path):
+        with codecs.open(file_path, encoding='utf-8') as file:
             lines = file.readlines()
             return lines
 
@@ -153,8 +153,8 @@ class ChessguessrStats:
     def create_chessguessr_entry(self, try_num):
         self.master_dict[self.current_name][self.current_date][GameMode.Chessguessr] =  try_num
 
-    def main(self):
-        lines = self.read_file()
+    def parse_file(self, file_path):
+        lines = self.read_file(file_path)
         for line in lines:
             parsed_header = self.parse_message_header(line)
             if (parsed_header):
@@ -169,7 +169,8 @@ class ChessguessrStats:
         self.unify_dates()
 
 stats = ChessguessrStats()
-stats.main()
+file = 'data/WhatsApp Chat with Dino Ehman.txt'
+stats.parse_file(file)
 # stats.create_graph(GameMode.Classic)
 # stats.create_graph(GameMode.Art)
 # stats.create_graph(GameMode.Keywords)
