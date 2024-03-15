@@ -1,10 +1,10 @@
-from ChessguessrStats import ChessguessrStats, GameMode
+from DailyGameStats import DailyGameStats, GameMode
 import pytest
 from datetime import datetime
 
-class TestChessguessrStats:
+class TestDailyGameStats:
     def setup_method(self, method):
-        self.stats = ChessguessrStats()
+        self.stats = DailyGameStats()
 
     def test_parse_gamedle_try(self):
         assert self.stats.parse_gamedle_try('🟥🟥🟥🟥🟥🟥') == self.stats.FAILED_TRY

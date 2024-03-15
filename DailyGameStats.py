@@ -12,7 +12,7 @@ class GameMode():
     Keywords = 'Keywords'
     Chessguessr = 'Chessguessr'
 
-class ChessguessrStats:
+class DailyGameStats:
     def __init__(self):
         self.current_name = ''
         self.current_date = ''
@@ -168,13 +168,13 @@ class ChessguessrStats:
         self.clean_master_dict()
         self.unify_dates()
 
-stats = ChessguessrStats()
+stats = DailyGameStats()
 file = 'data/WhatsApp Chat with Dino Ehman.txt'
 stats.parse_file(file)
 # stats.create_graph(GameMode.Classic)
 # stats.create_graph(GameMode.Art)
 # stats.create_graph(GameMode.Keywords)
-stats.create_graph(GameMode.Chessguessr)
+# stats.create_graph(GameMode.Chessguessr)
 
 
 ### todo expot date to excell, vjerojatno treba samo exportati index
