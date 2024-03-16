@@ -9,7 +9,7 @@ class TestFunStats: # todo koristi game mode + fail tryes
             'Dino Ehman': { datetime(2023, 12, 4, 0, 0): {'Classic': 6, 'Art': 5, 'Keywords': 10, 'Chessguessr': 1},
                             datetime(2023, 12, 5, 0, 0): {'Classic': 3, 'Art': 4, 'Keywords': 10, 'Chessguessr': 2},
                             datetime(2023, 12, 6, 0, 0): {'Classic': 10, 'Art': 10, 'Keywords': 2, 'Chessguessr': 4}},
-            'Antun': { datetime(2023, 12, 4, 0, 0): {'Classic': 3, 'Art': 6, 'Chessguessr': 1},
+            'Antun': { datetime(2023, 12, 4, 0, 0): {'Classic': 3, 'Art': 6, 'Keywords': 2, 'Chessguessr': 1},
                        datetime(2023, 12, 5, 0, 0): {'Classic': 10, 'Art': 5, 'Keywords': 2, 'Chessguessr': 3},
                        datetime(2023, 12, 6, 0, 0): {'Classic': 1, 'Art': 10, 'Keywords': 2, 'Chessguessr': 2}}
         }
@@ -28,5 +28,8 @@ class TestFunStats: # todo koristi game mode + fail tryes
                                                                 'Chessguessr' : 7}
     
     def test_top_3_streaks(self):
-        assert True # todo bolji data set za test
+        assert self.fun_stats.top_3_streaks()['Antun'] == { 'Classic' : [1, 1],
+                                                            'Art' : [2],
+                                                            'Keywords' : [3],
+                                                            'Chessguessr' : [1]}
         

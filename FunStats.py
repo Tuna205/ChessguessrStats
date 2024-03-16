@@ -53,7 +53,7 @@ class FunStats:
                 'Chessguessr' : []}
 
     #TODO test
-    def top_3_streaks_(self): # chessguessr first try, gamedle before fail
+    def top_3_streaks(self): # chessguessr first try, gamedle before fail
         top_3_streaks = {} # all streaks
         for player, sub_dict in self.master_dict.items():
             top_3_streaks[player] = self.create_top_3_dict()
@@ -63,15 +63,24 @@ class FunStats:
                     if game_mode == GameMode.Chessguessr:
                         if score == 1:
                             current_streak[game_mode] += 1
-                        else:
+                        elif current_streak[game_mode] != 0:
                             top_3_streaks[player][game_mode].append(current_streak[game_mode])
                             current_streak[game_mode] = 0
                     else:
                         if score != self.FAILED_TRY:
                             current_streak[game_mode] += 1
-                        else:
+                        elif current_streak[game_mode] != 0:
                             top_3_streaks[player][game_mode].append(current_streak[game_mode])
                             current_streak[game_mode] = 0
+            
+            for game_mode, last_streak in current_streak.items():
+                if last_streak != 0:   
+                    top_3_streaks[player][game_mode].append(last_streak)
+
+        for player, sub_dict in top_3_streaks.items():
+            for game_mode, streak in sub_dict.items():
+                streak.sort(reverse=True)
+                streak = streak[:3]
                     
         return top_3_streaks
 
