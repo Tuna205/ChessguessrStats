@@ -52,9 +52,8 @@ class FunStats:
                 'Keywords' : [],
                 'Chessguessr' : []}
 
-    #TODO test
     def top_3_streaks(self): # chessguessr first try, gamedle before fail
-        top_3_streaks = {} # all streaks
+        top_3_streaks = {}
         for player, sub_dict in self.master_dict.items():
             top_3_streaks[player] = self.create_top_3_dict()
             current_streak = self.create_total_try_dict()
@@ -86,5 +85,3 @@ class FunStats:
 
     def days_played(self):
         return len(self.master_dict.items()[1])
-
-    

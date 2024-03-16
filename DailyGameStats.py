@@ -43,10 +43,6 @@ class DailyGameStats:
         else:
             return None
 
-    def to_date(self, date_str):
-        date = datetime.strptime(date_str, '%m/%d/%y')
-        return date
-
     def parse_message_header(self, line):
         pattern = r"\d+/\d+/\d+, \d+:\d+ - [\w ]+:"
         matches = re.findall(pattern, line)
@@ -59,11 +55,6 @@ class DailyGameStats:
             return (date, time, name)
         else:
             return None
-
-    def read_file(self, file_path):
-        with codecs.open(file_path, encoding='utf-8') as file:
-            lines = file.readlines()
-            return lines
 
     def create_gamedle_entry(self, line):
         gamedle_type = self.parse_gamedle_line(line)
@@ -82,19 +73,6 @@ class DailyGameStats:
         if self.current_date not in self.master_dict[self.current_name]:
             self.master_dict[self.current_name][self.current_date] = {}
 
-    def create_dataframe(self):
-        df_dict = {}
-        for player, stats in self.master_dict.items():
-            df_dict[player] = pd.DataFrame(stats).T
-        return df_dict
-
-    def export_to_excel(self, file_name):
-        master_df = self.create_dataframe()
-        writer = pd.ExcelWriter(file_name, engine='xlsxwriter')
-        for sheet_name, df in master_df.items():
-            df.to_excel(writer, sheet_name=sheet_name, index=False)
-        writer.close()
-
     def clean_master_dict(self):
         for_deletion = []
         for player, sub_dict in self.master_dict.items():
@@ -104,24 +82,6 @@ class DailyGameStats:
         
         for player, date in for_deletion:
             del self.master_dict[player][date]
-
-    def create_graph(self, game_mode):
-        df_dict = self.create_dataframe()
-
-        fig, ax = plt.subplots()
-        width = 0.2
-        day_width = timedelta(days=width)
-
-        i = 0
-        for player, df in df_dict.items():
-            ax.bar(df.index + day_width * i, df[game_mode], label=player, width=width)
-            i += 1
-
-        plt.title(game_mode)
-        ax.set_xlabel('Date')
-        ax.set_ylabel('Tries')
-        ax.legend()
-        plt.show()
 
     def calculate_all_playing_dates(self):
         dates = []
@@ -170,6 +130,47 @@ class DailyGameStats:
         
         self.clean_master_dict()
         self.unify_dates()
+
+    def read_file(self, file_path):
+        with codecs.open(file_path, encoding='utf-8') as file:
+            lines = file.readlines()
+            return lines
+
+    # TODO move to other files, frontend and requirements.txt
+    def to_date(self, date_str):
+        date = datetime.strptime(date_str, '%m/%d/%y')
+        return date
+    
+    def create_dataframe(self):
+        df_dict = {}
+        for player, stats in self.master_dict.items():
+            df_dict[player] = pd.DataFrame(stats).T
+        return df_dict
+
+    def export_to_excel(self, file_name):
+        master_df = self.create_dataframe()
+        writer = pd.ExcelWriter(file_name, engine='xlsxwriter')
+        for sheet_name, df in master_df.items():
+            df.to_excel(writer, sheet_name=sheet_name, index=False)
+        writer.close()
+        
+    def create_graph(self, game_mode):
+        df_dict = self.create_dataframe()
+
+        fig, ax = plt.subplots()
+        width = 0.2
+        day_width = timedelta(days=width)
+
+        i = 0
+        for player, df in df_dict.items():
+            ax.bar(df.index + day_width * i, df[game_mode], label=player, width=width)
+            i += 1
+
+        plt.title(game_mode)
+        ax.set_xlabel('Date')
+        ax.set_ylabel('Tries')
+        ax.legend()
+        plt.show()
 
 
 ### todo expot date to excell, vjerojatno treba samo exportati index
