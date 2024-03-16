@@ -26,7 +26,7 @@ class FunStats:
         for player, sub_dict in self.master_dict.items():
             number_of_tries[player] = self.create_num_tries_dict()
             for date, scores in sub_dict.items():
-                for game_mode, score in scores.items():
+                for game_mode, score in scores.items():                    
                     number_of_tries[player][game_mode][score] += 1
 
         return number_of_tries
@@ -80,7 +80,7 @@ class FunStats:
         for player, sub_dict in top_3_streaks.items():
             for game_mode, streak in sub_dict.items():
                 streak.sort(reverse=True)
-                streak = streak[:3]
+                top_3_streaks[player][game_mode] = streak[:3]
                     
         return top_3_streaks
 

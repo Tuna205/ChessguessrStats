@@ -135,7 +135,10 @@ class DailyGameStats:
         for player, sub_dict in self.master_dict.items():
             for date in dates:
                 if date not in sub_dict:
-                    sub_dict[date] = {GameMode.Classic : 0, GameMode.Art : 0, GameMode.Keywords : 0, GameMode.Chessguessr : 0} 
+                    sub_dict[date] = {GameMode.Classic : self.FAILED_TRY, 
+                                      GameMode.Art : self.FAILED_TRY, 
+                                      GameMode.Keywords : self.FAILED_TRY, 
+                                      GameMode.Chessguessr : self.FAILED_TRY} 
 
     def parse_chessguessr_line(self, line):
         pattern = r"\w*Chessguessr #\d+ ./\d"
@@ -167,15 +170,6 @@ class DailyGameStats:
         
         self.clean_master_dict()
         self.unify_dates()
-
-stats = DailyGameStats()
-file = 'data/WhatsApp Chat with Dino Ehman.txt'
-stats.parse_file(file)
-print(stats.master_dict)
-# stats.create_graph(GameMode.Classic)
-# stats.create_graph(GameMode.Art)
-# stats.create_graph(GameMode.Keywords)
-# stats.create_graph(GameMode.Chessguessr)
 
 
 ### todo expot date to excell, vjerojatno treba samo exportati index
