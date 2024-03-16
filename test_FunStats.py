@@ -21,4 +21,8 @@ class TestFunStats: # todo koristi game mode + fail tryes
                                                                     'Keywords' : {1 : 0, 2: 1, 3: 0, 4: 0, 5: 0, 6: 0, 10: 2},
                                                                     'Chessguessr' : {1 : 1, 2: 1, 3: 0, 4: 1, 5: 0, 10: 0}}
         
-        
+    def test_total_tries(self):
+        assert self.fun_stats.total_tries()['Dino Ehman'] == {  'Classic' : 19,
+                                                                'Art' : 19,
+                                                                'Keywords' : 22,
+                                                                'Chessguessr' : 7}
