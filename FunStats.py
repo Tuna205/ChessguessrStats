@@ -46,4 +46,33 @@ class FunStats:
                     total_tries[player][game_mode] += score
         return total_tries
 
+    def create_top_3_dict(self):
+        return {'Classic' : [],
+                'Art' : [],
+                'Keywords' : [],
+                'Chessguessr' : []}
+
+    #TODO test
+    def top_3_streaks_(self): # chessguessr first try, gamedle before fail
+        top_3_streaks = {} # all streaks
+        for player, sub_dict in self.master_dict.items():
+            top_3_streaks[player] = self.create_top_3_dict()
+            current_streak = self.create_total_try_dict()
+            for date, scores in sub_dict.items():
+                for game_mode, score in scores.items():
+                    if game_mode == GameMode.Chessguessr:
+                        if score == 1:
+                            current_streak[game_mode] += 1
+                        else:
+                            top_3_streaks[player][game_mode].append(current_streak[game_mode])
+                            current_streak[game_mode] = 0
+                    else:
+                        if score != self.FAILED_TRY:
+                            current_streak[game_mode] += 1
+                        else:
+                            top_3_streaks[player][game_mode].append(current_streak[game_mode])
+                            current_streak[game_mode] = 0
+                    
+        return top_3_streaks
+
     

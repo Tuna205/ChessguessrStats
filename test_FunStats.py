@@ -26,3 +26,7 @@ class TestFunStats: # todo koristi game mode + fail tryes
                                                                 'Art' : 19,
                                                                 'Keywords' : 22,
                                                                 'Chessguessr' : 7}
+    
+    def test_top_3_streaks(self):
+        assert True # todo bolji data set za test
+        
