@@ -32,4 +32,7 @@ class TestFunStats: # todo koristi game mode + fail tryes
                                                             'Art' : [2],
                                                             'Keywords' : [3],
                                                             'Chessguessr' : [1]}
+    
+    def test_days_played(self):
+        assert self.fun_stats.days_played() == 3
         
