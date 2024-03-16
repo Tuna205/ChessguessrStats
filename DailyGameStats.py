@@ -171,6 +171,7 @@ class DailyGameStats:
 stats = DailyGameStats()
 file = 'data/WhatsApp Chat with Dino Ehman.txt'
 stats.parse_file(file)
+print(stats.master_dict)
 # stats.create_graph(GameMode.Classic)
 # stats.create_graph(GameMode.Art)
 # stats.create_graph(GameMode.Keywords)
