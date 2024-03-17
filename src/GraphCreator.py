@@ -35,8 +35,7 @@ class GraphCreator:
             i += 1
 
         plt.title(game_mode)
-        ax.set_xlabel('Score')
-        ax.set_ylabel('Tries')
+        ax.set_xlabel('Num of Tries')
 
         return (fig, ax)
 
@@ -47,8 +46,7 @@ class GraphCreator:
             ax.bar_label(container)
         fig = ax.get_figure()
 
-        ax.set_xlabel('Score')
-        ax.set_ylabel('Mode')
+        ax.set_xlabel('Total tries')
 
         return (fig, ax)
 
@@ -59,7 +57,6 @@ class GraphCreator:
             ax.bar_label(container)
         fig = ax.get_figure()
 
-        ax.set_xlabel('Score')
-        ax.set_ylabel('Mode')
+        ax.set_xlabel('Streak')
 
         return (fig, ax)
