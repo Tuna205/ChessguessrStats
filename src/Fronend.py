@@ -4,7 +4,7 @@ from src.Constants import GameMode
 from src.Utils import Utils
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import QLabel, QScrollArea
+from PyQt5.QtWidgets import QSizePolicy, QLabel, QScrollArea
 import matplotlib
 matplotlib.use('Qt5Agg')
 
@@ -61,6 +61,11 @@ class MainWindow(QtWidgets.QMainWindow):
         scroll_area.setWidget(root)
         scroll_area.setWidgetResizable(True)
         scroll_area.adjustSize()
+        scroll_area.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
+        # scroll_area.setFixedHeight(400)
+
+        # scroll_area.sizePolicy = QSizePolicy(
+        #     QSizePolicy.Ignored, QSizePolicy.Ignored)
 
         self.setWindowTitle("Game Stats")
         self.setCentralWidget(scroll_area)
