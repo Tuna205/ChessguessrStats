@@ -49,22 +49,21 @@ class MainWindow(QtWidgets.QMainWindow):
         streaks_wgt = self.create_highest_streak_widget()
         layout.addWidget(streaks_wgt)
 
-        # daily_title = QLabel("Daily Tries", self)
-        # layout.addWidget(daily_title)
-        # daily_wgt = self.create_daily_stats_widget()
-        # layout.addWidget(daily_wgt)
+        daily_title = QLabel("Daily Tries", self)
+        layout.addWidget(daily_title)
+        daily_wgt = self.create_daily_stats_widget()
+        layout.addWidget(daily_wgt)
 
         root = QtWidgets.QWidget()
         root.setLayout(layout)
 
         scroll_area = QScrollArea(self)
-        scroll_area.setWidgetResizable(True)
         scroll_area.setWidget(root)
+        scroll_area.setWidgetResizable(True)
+        scroll_area.adjustSize()
 
         self.setWindowTitle("Game Stats")
         self.setCentralWidget(scroll_area)
-
-        self.showMaximized()
 
     def create_daily_stats_widget(self):
         df_dict = Utils.create_dataframe(self.master_dict)

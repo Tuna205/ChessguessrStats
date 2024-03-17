@@ -48,6 +48,7 @@ def frontend():
     app.setFont(custom_font, "QLabel")
 
     w = MainWindow(master_dict)
+    w.showMaximized()
     app.exec_()
 
 
