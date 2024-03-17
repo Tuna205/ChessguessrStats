@@ -10,8 +10,15 @@ class Utils:
         return date
 
     @staticmethod
-    def create_dataframe(d):
+    def create_dataframe(master_dict):
         df_dict = {}
-        for player, stats in d.items():
+        for player, stats in master_dict.items():
             df_dict[player] = pd.DataFrame(stats).T
+        return df_dict
+
+    def create_num_tries_dataframe(num_tries_dict):
+        df_dict = {}
+        for player, stats in num_tries_dict.items():
+            df = pd.DataFrame(stats)
+            df_dict[player] = df
         return df_dict

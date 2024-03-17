@@ -1,7 +1,5 @@
 from datetime import timedelta
 import matplotlib.pyplot as plt
-import matplotlib
-matplotlib.use('QtAgg')
 
 
 class GraphCreator:
@@ -21,8 +19,20 @@ class GraphCreator:
         plt.title(game_mode)
         ax.set_xlabel('Date')
         ax.set_ylabel('Tries')
-        # ax.legend()
 
         return (fig, ax)
-    
-    
+
+    def create_num_tries_graph(game_mode, df_dict):
+        fig, ax = plt.subplots()
+        width = 0.4
+        i = 0
+        for player, df in df_dict.items():
+            ax.barh(df.index + width * i,
+                    df[game_mode], label=player, height=width)
+            i += 1
+
+        plt.title(game_mode)
+        ax.set_xlabel('Score')
+        ax.set_ylabel('Tries')
+
+        return (fig, ax)

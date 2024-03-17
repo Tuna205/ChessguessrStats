@@ -1,3 +1,4 @@
+from src.FunStats import FunStats
 from src.GraphCreator import GraphCreator
 from src.Constants import GameMode
 from src.Utils import Utils
@@ -32,6 +33,15 @@ class MainWindow(QtWidgets.QMainWindow):
         chessguessr_plot = GraphCreator.create_game_mode_graph(
             GameMode.Chessguessr, df_dict)
 
+        # izdvoji u funkciju
+        fun_stats = FunStats(master_dict)
+        num_tries = fun_stats.number_of_tries()
+        df_dict_tries = Utils.create_num_tries_dataframe(num_tries)
+        num_tries_plot = GraphCreator.create_num_tries_graph(
+            GameMode.Classic, df_dict_tries)
+
+        num_tries_canvas = MplCanvas(*num_tries_plot, self)
+
         classic_canvas = MplCanvas(*classic_plot, self)
         classic_toolbar = NavigationToolbar(classic_canvas, self)
 
@@ -45,6 +55,8 @@ class MainWindow(QtWidgets.QMainWindow):
         chessguessr_toolbar = NavigationToolbar(chessguessr_canvas, self)
 
         layout = QtWidgets.QVBoxLayout()
+
+        layout.addWidget(num_tries_canvas)
         # layout.addWidget(classic_toolbar)
         layout.addWidget(classic_canvas)
 
