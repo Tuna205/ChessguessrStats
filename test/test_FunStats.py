@@ -1,5 +1,5 @@
-from FunStats import FunStats
-from DailyGameStats import GameMode
+from src.FunStats import FunStats
+from src.DailyGameStats import GameMode
 import pytest
 from datetime import datetime
 

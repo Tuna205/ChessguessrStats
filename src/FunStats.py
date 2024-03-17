@@ -1,13 +1,4 @@
-
-# fun stats - can be calculated from a date
-#     - top 3 biggest streaks for every mode
-#     - number of tries graph
-#     - total number of tries
-# slice -----------
-#     - perfection
-#     - total fail
-#     - biggest differences - ako se može dobiti referenca na konkretanu pazlu
-from DailyGameStats import GameMode
+from src.DailyGameStats import GameMode
 
 class FunStats:
     

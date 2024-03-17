@@ -1,4 +1,4 @@
-from DailyGameStats import DailyGameStats, GameMode
+from src.DailyGameStats import DailyGameStats, GameMode
 import pytest
 from datetime import datetime
 
