@@ -84,4 +84,5 @@ class FunStats:
         return top_3_streaks
 
     def days_played(self):
-        return len(self.master_dict.items()[1])
+        for player, sub_dict in self.master_dict.items():
+            return len(sub_dict)
