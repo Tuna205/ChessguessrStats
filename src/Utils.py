@@ -28,3 +28,8 @@ class Utils:
     def create_total_tries_dataframe(total_tries_dict):
         df = pd.DataFrame(total_tries_dict)
         return df
+
+    @staticmethod
+    def create_streaks_dataframe(streak_dict):
+        df = pd.DataFrame(streak_dict)
+        return df

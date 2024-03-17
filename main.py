@@ -31,7 +31,7 @@ def no_frontend():
     for player, tries in stats.total_tries().items():
         print(f'{player} : {tries}')
     print('Top 3')
-    for player, top_3 in stats.top_3_streaks().items():
+    for player, top_3 in stats.top_streak().items():
         print(f'{player} : {top_3}')
 
 

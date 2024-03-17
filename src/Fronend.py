@@ -23,27 +23,8 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, master_dict, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
 
+        self.master_dict = master_dict
         self.fun_stats = FunStats(master_dict)
-        df_dict = Utils.create_dataframe(master_dict)
-        classic_plot = GraphCreator.create_game_mode_graph(
-            GameMode.Classic, df_dict)
-        art_plot = GraphCreator.create_game_mode_graph(GameMode.Art, df_dict)
-        keyword_plot = GraphCreator.create_game_mode_graph(
-            GameMode.Keywords, df_dict)
-        chessguessr_plot = GraphCreator.create_game_mode_graph(
-            GameMode.Chessguessr, df_dict)
-
-        classic_canvas = MplCanvas(*classic_plot, self)
-        classic_toolbar = NavigationToolbar(classic_canvas, self)
-
-        art_canvas = MplCanvas(*art_plot, self)
-        art_toolbar = NavigationToolbar(art_canvas, self)
-
-        keyword_canvas = MplCanvas(*keyword_plot, self)
-        keyword_toolbar = NavigationToolbar(keyword_canvas, self)
-
-        chessguessr_canvas = MplCanvas(*chessguessr_plot, self)
-        chessguessr_toolbar = NavigationToolbar(chessguessr_canvas, self)
 
         layout = QtWidgets.QVBoxLayout()
 
@@ -57,19 +38,15 @@ class MainWindow(QtWidgets.QMainWindow):
         total_tries_wgt = self.create_total_tries_widget()
         layout.addWidget(total_tries_wgt)
 
-        daily_title = QLabel("Daily Tries", self)
-        layout.addWidget(daily_title)
-        # layout.addWidget(classic_toolbar)
-        layout.addWidget(classic_canvas)
+        streaks_title = QLabel("Highest Streak", self)
+        layout.addWidget(streaks_title)
+        streaks_wgt = self.create_highest_streak_widget()
+        layout.addWidget(streaks_wgt)
 
-        # layout.addWidget(art_toolbar)
-        layout.addWidget(art_canvas)
-
-        # layout.addWidget(keyword_toolbar)
-        layout.addWidget(keyword_canvas)
-
-        # layout.addWidget(chessguessr_toolbar)
-        layout.addWidget(chessguessr_canvas)
+        # daily_title = QLabel("Daily Tries", self)
+        # layout.addWidget(daily_title)
+        # daily_wgt = self.create_daily_stats_widget()
+        # layout.addWidget(daily_wgt)
 
         root = QtWidgets.QWidget()
         root.setLayout(layout)
@@ -82,6 +59,32 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setCentralWidget(scroll_area)
 
         self.showMaximized()
+
+    def create_daily_stats_widget(self):
+        df_dict = Utils.create_dataframe(self.master_dict)
+        classic_plot = GraphCreator.create_game_mode_graph(
+            GameMode.Classic, df_dict)
+        art_plot = GraphCreator.create_game_mode_graph(GameMode.Art, df_dict)
+        keyword_plot = GraphCreator.create_game_mode_graph(
+            GameMode.Keywords, df_dict)
+        chessguessr_plot = GraphCreator.create_game_mode_graph(
+            GameMode.Chessguessr, df_dict)
+
+        classic_canvas = MplCanvas(*classic_plot, self)
+        art_canvas = MplCanvas(*art_plot, self)
+        keyword_canvas = MplCanvas(*keyword_plot, self)
+        chessguessr_canvas = MplCanvas(*chessguessr_plot, self)
+
+        layout = QtWidgets.QVBoxLayout()
+        layout.addWidget(classic_canvas)
+        layout.addWidget(art_canvas)
+        layout.addWidget(keyword_canvas)
+        layout.addWidget(chessguessr_canvas)
+
+        daily_wgt = QtWidgets.QWidget()
+        daily_wgt.setLayout(layout)
+
+        return daily_wgt
 
     def create_num_of_tries_widget(self):
         num_tries = self.fun_stats.number_of_tries()
@@ -122,3 +125,11 @@ class MainWindow(QtWidgets.QMainWindow):
         total_tries_wgt = MplCanvas(*total_tries_plot, self)
 
         return total_tries_wgt
+
+    def create_highest_streak_widget(self):
+        streaks = self.fun_stats.top_streak()
+        df_streaks = Utils.create_streaks_dataframe(streaks)
+        streaks_plot = GraphCreator.create_streaks_graph(df_streaks)
+        streaks_wgt = MplCanvas(*streaks_plot, self)
+
+        return streaks_wgt

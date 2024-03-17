@@ -43,10 +43,10 @@ class FunStats:
                 GameMode.Keywords: [],
                 GameMode.Chessguessr: []}
 
-    def top_3_streaks(self):  # chessguessr first try, gamedle before fail
-        top_3_streaks = {}
+    def top_streak(self):  # chessguessr first try, gamedle before fail
+        streaks = {}
         for player, sub_dict in self.master_dict.items():
-            top_3_streaks[player] = self.create_top_3_dict()
+            streaks[player] = self.create_top_3_dict()
             current_streak = self.create_total_try_dict()
             for date, scores in sub_dict.items():
                 for game_mode, score in scores.items():
@@ -54,27 +54,28 @@ class FunStats:
                         if score == 1:
                             current_streak[game_mode] += 1
                         elif current_streak[game_mode] != 0:
-                            top_3_streaks[player][game_mode].append(
+                            streaks[player][game_mode].append(
                                 current_streak[game_mode])
                             current_streak[game_mode] = 0
                     else:
                         if score != FAILED_TRY:
                             current_streak[game_mode] += 1
                         elif current_streak[game_mode] != 0:
-                            top_3_streaks[player][game_mode].append(
+                            streaks[player][game_mode].append(
                                 current_streak[game_mode])
                             current_streak[game_mode] = 0
 
             for game_mode, last_streak in current_streak.items():
                 if last_streak != 0:
-                    top_3_streaks[player][game_mode].append(last_streak)
+                    streaks[player][game_mode].append(last_streak)
 
-        for player, sub_dict in top_3_streaks.items():
+        for player, sub_dict in streaks.items():
             for game_mode, streak in sub_dict.items():
                 streak.sort(reverse=True)
-                top_3_streaks[player][game_mode] = streak[:3]
+                # streak[:3] za top3
+                streaks[player][game_mode] = streak[0]
 
-        return top_3_streaks
+        return streaks
 
     def days_played(self):
         for player, sub_dict in self.master_dict.items():

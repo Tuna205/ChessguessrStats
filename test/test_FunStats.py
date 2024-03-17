@@ -28,10 +28,10 @@ class TestFunStats:  # todo koristi game mode + fail tryes
                                                               GameMode.Chessguessr: 7}
 
     def test_top_3_streaks(self):
-        assert self.fun_stats.top_3_streaks()['Antun'] == {GameMode.Classic: [1, 1],
-                                                           GameMode.Art: [2],
-                                                           GameMode.Keywords: [3],
-                                                           GameMode.Chessguessr: [1]}
+        assert self.fun_stats.top_streak()['Antun'] == {GameMode.Classic: 1,
+                                                        GameMode.Art: 2,
+                                                        GameMode.Keywords: 3,
+                                                        GameMode.Chessguessr: 1}
 
     def test_days_played(self):
         assert self.fun_stats.days_played() == 3
