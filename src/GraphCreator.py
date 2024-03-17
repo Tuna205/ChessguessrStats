@@ -12,7 +12,7 @@ class GraphCreator:
 
         i = 0
         for player, df in df_dict.items():
-            ax.bar(df.index + day_width * i,
+            ax.bar(df.index + day_width * i - day_width/2,
                    df[game_mode], label=player, width=width)
             i += 1
 
@@ -27,7 +27,7 @@ class GraphCreator:
         width = 0.4
         i = 0
         for player, df in df_dict.items():
-            ax.barh(df.index + width * i,
+            ax.barh(df.index + width * i - width/2,
                     df[game_mode], label=player, height=width)
             i += 1
 

@@ -5,7 +5,8 @@ from src.GraphCreator import GraphCreator
 from src.Utils import Utils
 
 import sys
-from PyQt5 import QtCore, QtWidgets
+from PyQt5 import QtWidgets
+from PyQt5.QtGui import QFont
 from src.Fronend import MainWindow
 
 
@@ -41,6 +42,11 @@ def frontend():
     master_dict = parser.master_dict
 
     app = QtWidgets.QApplication(sys.argv)
+
+    custom_font = QFont()
+    custom_font.setPointSize(18)  # Set your desired font size
+    app.setFont(custom_font, "QLabel")
+
     w = MainWindow(master_dict)
     app.exec_()
 
