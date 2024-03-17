@@ -21,5 +21,6 @@ class GraphCreator:
         plt.title(game_mode)
         ax.set_xlabel('Date')
         ax.set_ylabel('Tries')
-        ax.legend()
-        plt.show()
+        # ax.legend()
+
+        return (fig, ax)
