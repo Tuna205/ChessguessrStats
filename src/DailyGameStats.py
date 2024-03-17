@@ -141,21 +141,14 @@ class DailyGameStats:
         date = datetime.strptime(date_str, '%m/%d/%y')
         return date
     
-    def create_dataframe(self):
+    def create_master_dataframe(self):
         df_dict = {}
         for player, stats in self.master_dict.items():
             df_dict[player] = pd.DataFrame(stats).T
         return df_dict
-
-    def export_to_excel(self, file_name):
-        master_df = self.create_dataframe()
-        writer = pd.ExcelWriter(file_name, engine='xlsxwriter')
-        for sheet_name, df in master_df.items():
-            df.to_excel(writer, sheet_name=sheet_name, index=False)
-        writer.close()
         
     def create_graph(self, game_mode):
-        df_dict = self.create_dataframe()
+        df_dict = self.create_master_dataframe()
 
         fig, ax = plt.subplots()
         width = 0.2
