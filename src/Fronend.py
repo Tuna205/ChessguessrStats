@@ -2,11 +2,9 @@ from src.FunStats import FunStats
 from src.GraphCreator import GraphCreator
 from src.Constants import GameMode
 from src.Utils import Utils
-from matplotlib.figure import Figure
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT as NavigationToolbar
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QLabel, QScrollArea
-import sys
 import matplotlib
 matplotlib.use('Qt5Agg')
 
@@ -27,6 +25,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.fun_stats = FunStats(master_dict)
 
         layout = QtWidgets.QVBoxLayout()
+
+        main_title = QLabel("Game Stats")
+        main_title.setAlignment(QtCore.Qt.AlignCenter)
+        layout.addWidget(main_title)
+
+        days_played_label = QLabel(
+            f"Days played : {self.fun_stats.days_played()}")
+        layout.addWidget(days_played_label)
 
         num_of_tries_title = QLabel("Number of tries", self)
         layout.addWidget(num_of_tries_title)
