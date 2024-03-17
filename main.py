@@ -44,9 +44,8 @@ def frontend():
     app = QtWidgets.QApplication(sys.argv)
 
     custom_font = QFont()
-    custom_font.setPointSize(18)  # Set your desired font size
+    custom_font.setPointSize(18) 
     app.setFont(custom_font, "QLabel")
-
     w = MainWindow(master_dict)
     w.showMaximized()
     app.exec_()
