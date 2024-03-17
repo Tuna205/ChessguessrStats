@@ -1,4 +1,4 @@
-from src.DailyGameStats import DailyGameStats, GameMode
+from src.StatParser import StatParser, GameMode
 from src.FunStats import FunStats
 from src.Exporter import Exporter
 from src.GraphCreator import GraphCreator
@@ -10,7 +10,7 @@ from src.Fronend import MainWindow
 
 
 def no_frontend():
-    parser = DailyGameStats()
+    parser = StatParser()
     file = 'data/WhatsApp Chat with Dino Ehman.txt'
     parser.parse_file(file)
     master_dict = parser.master_dict
@@ -35,7 +35,7 @@ def no_frontend():
 
 
 def frontend():
-    parser = DailyGameStats()
+    parser = StatParser()
     file = 'data/WhatsApp Chat with Dino Ehman.txt'
     parser.parse_file(file)
     master_dict = parser.master_dict

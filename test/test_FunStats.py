@@ -1,5 +1,5 @@
 from src.FunStats import FunStats
-from src.DailyGameStats import GameMode, FAILED_TRY
+from src.StatParser import GameMode, FAILED_TRY
 from datetime import datetime
 
 

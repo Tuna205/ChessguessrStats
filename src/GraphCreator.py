@@ -24,3 +24,5 @@ class GraphCreator:
         # ax.legend()
 
         return (fig, ax)
+    
+    

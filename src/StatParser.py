@@ -4,7 +4,7 @@ from src.Utils import Utils
 from src.Constants import GameMode, FAILED_TRY
 
 
-class DailyGameStats:
+class StatParser:
     def __init__(self):
         self.current_name = ''
         self.current_date = ''

@@ -1,11 +1,11 @@
-from src.DailyGameStats import DailyGameStats
+from src.StatParser import StatParser
 from src.Utils import Utils
 from src.Constants import GameMode, FAILED_TRY
 
 
 class TestDailyGameStats:
     def setup_method(self, method):
-        self.stats = DailyGameStats()
+        self.stats = StatParser()
 
     def test_parse_gamedle_try(self):
         assert self.stats.parse_gamedle_try('🟥🟥🟥🟥🟥🟥') == FAILED_TRY
@@ -30,7 +30,8 @@ class TestDailyGameStats:
 
     def test_parse_message_header(self):
         assert self.stats.parse_message_header("12/13/23, 07:49 - Antun: 🕹️ Gamedle: 13/12/2023 🟥🟥🟥🟥🟥🟩"
-            "") == (Utils.to_date('12/13/23'), '07:49', 'Antun') # mm/dd/yy"
+                                               # mm/dd/yy"
+                                               "") == (Utils.to_date('12/13/23'), '07:49', 'Antun')
         assert self.stats.parse_message_header(
             '12/13/23, 07:49 - Dino Ehman: 🕹️ Gamedle: 13/12/2023 🟥🟥🟥🟥🟥🟩') == (Utils.to_date('12/13/23'), '07:49', 'Dino Ehman')
         assert self.stats.parse_message_header('test') == None
