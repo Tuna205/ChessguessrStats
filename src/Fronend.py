@@ -23,7 +23,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, master_dict, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
 
-        self.master_dict = master_dict
+        self.fun_stats = FunStats(master_dict)
         df_dict = Utils.create_dataframe(master_dict)
         classic_plot = GraphCreator.create_game_mode_graph(
             GameMode.Classic, df_dict)
@@ -45,13 +45,17 @@ class MainWindow(QtWidgets.QMainWindow):
         chessguessr_canvas = MplCanvas(*chessguessr_plot, self)
         chessguessr_toolbar = NavigationToolbar(chessguessr_canvas, self)
 
-        num_of_tries_wgt = self.create_num_of_tries_widget()
-
         layout = QtWidgets.QVBoxLayout()
 
         num_of_tries_title = QLabel("Number of tries", self)
         layout.addWidget(num_of_tries_title)
+        num_of_tries_wgt = self.create_num_of_tries_widget()
         layout.addWidget(num_of_tries_wgt)
+
+        total_tries_title = QLabel("Total tries", self)
+        layout.addWidget(total_tries_title)
+        total_tries_wgt = self.create_total_tries_widget()
+        layout.addWidget(total_tries_wgt)
 
         daily_title = QLabel("Daily Tries", self)
         layout.addWidget(daily_title)
@@ -80,8 +84,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.showMaximized()
 
     def create_num_of_tries_widget(self):
-        fun_stats = FunStats(self.master_dict)
-        num_tries = fun_stats.number_of_tries()
+        num_tries = self.fun_stats.number_of_tries()
         df_dict_tries = Utils.create_num_tries_dataframe(num_tries)
         num_tries_plot_classic = GraphCreator.create_num_tries_graph(
             GameMode.Classic, df_dict_tries)
@@ -111,3 +114,11 @@ class MainWindow(QtWidgets.QMainWindow):
         num_of_tries_wgt.setLayout(layout)
 
         return num_of_tries_wgt
+
+    def create_total_tries_widget(self):
+        total_tries = self.fun_stats.total_tries()
+        df_total_try = Utils.create_total_tries_dataframe(total_tries)
+        total_tries_plot = GraphCreator.create_total_tries_graph(df_total_try)
+        total_tries_wgt = MplCanvas(*total_tries_plot, self)
+
+        return total_tries_wgt

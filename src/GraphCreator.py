@@ -22,17 +22,28 @@ class GraphCreator:
 
         return (fig, ax)
 
+    @staticmethod
     def create_num_tries_graph(game_mode, df_dict):
         fig, ax = plt.subplots()
-        width = 0.4
+        height = 0.4
         i = 0
         for player, df in df_dict.items():
-            ax.barh(df.index + width * i - width/2,
-                    df[game_mode], label=player, height=width)
+            ax.barh(df.index + height * i - height/2,
+                    df[game_mode], label=player, height=height)
             i += 1
 
         plt.title(game_mode)
         ax.set_xlabel('Score')
         ax.set_ylabel('Tries')
+
+        return (fig, ax)
+
+    @staticmethod
+    def create_total_tries_graph(df):
+        ax = df.plot.barh()
+        fig = ax.get_figure()
+
+        ax.set_xlabel('Score')
+        ax.set_ylabel('Mode')
 
         return (fig, ax)
