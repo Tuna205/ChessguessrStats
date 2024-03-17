@@ -1,5 +1,5 @@
-from DailyGameStats import DailyGameStats, GameMode
-from FunStats import FunStats
+from src.DailyGameStats import DailyGameStats, GameMode
+from src.FunStats import FunStats
 
 parser = DailyGameStats()
 file = 'data/WhatsApp Chat with Dino Ehman.txt'
