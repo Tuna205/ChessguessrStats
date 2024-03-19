@@ -5,8 +5,8 @@ from src.GraphCreator import GraphCreator
 from src.Utils import Utils
 
 import sys
-from PyQt5 import QtWidgets
-from PyQt5.QtGui import QFont
+from PyQt6 import QtWidgets
+from PyQt6.QtGui import QFont
 from src.Fronend import MainWindow
 
 
@@ -48,7 +48,7 @@ def frontend():
     app.setFont(custom_font, "QLabel")
     w = MainWindow(master_dict)
     w.showMaximized()
-    app.exec_()
+    app.exec()
 
 
 frontend()
