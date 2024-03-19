@@ -10,7 +10,7 @@ from PyQt6.QtGui import QFont
 from src.Fronend import MainWindow
 
 
-def no_frontend():
+def backend():
     parser = StatParser()
     file = 'data/WhatsApp Chat with Dino Ehman.txt'
     parser.parse_file(file)
@@ -21,7 +21,7 @@ def no_frontend():
     # GraphCreator.create_game_mode_graph(GameMode.Keywords, df_dict)
     # GraphCreator.create_game_mode_graph(GameMode.Chessguessr, df_dict)
 
-    # Exporter.export_to_excel(df_dict, 'test.xlsx')
+    Exporter.export_to_excel(df_dict, 'test.xlsx')
 
     stats = FunStats(master_dict)
     print('Number of tries')
@@ -44,7 +44,7 @@ def frontend():
     app = QtWidgets.QApplication(sys.argv)
 
     custom_font = QFont()
-    custom_font.setPointSize(18) 
+    custom_font.setPointSize(18)
     app.setFont(custom_font, "QLabel")
     w = MainWindow(master_dict)
     w.showMaximized()

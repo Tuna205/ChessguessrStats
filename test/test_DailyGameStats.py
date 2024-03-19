@@ -30,7 +30,6 @@ class TestDailyGameStats:
 
     def test_parse_message_header(self):
         assert self.stats.parse_message_header("12/13/23, 07:49 - Antun: 🕹️ Gamedle: 13/12/2023 🟥🟥🟥🟥🟥🟩"
-                                               # mm/dd/yy"
                                                "") == (Utils.to_date('12/13/23'), '07:49', 'Antun')
         assert self.stats.parse_message_header(
             '12/13/23, 07:49 - Dino Ehman: 🕹️ Gamedle: 13/12/2023 🟥🟥🟥🟥🟥🟩') == (Utils.to_date('12/13/23'), '07:49', 'Dino Ehman')
@@ -55,11 +54,11 @@ class TestDailyGameStats:
 
     def test_clean_master_dict(self):
         master_dict_mock = {'Antun': {'2/12/22': {}, '7/19/22': {}, '9/11/22': {},
-                                      '12/1/23': {GameMode.Classic: 1}, '12/2/23': {GameMode.Art: 2}}}
+                                      '12/1/23': {GameMode.Classic: 1, GameMode.Art: 2, GameMode.Keywords: 3, GameMode.Chessguessr: 4}, '12/2/23': {GameMode.Art: 2}}}
         self.stats.master_dict = master_dict_mock
         self.stats.clean_master_dict()
         assert self.stats.master_dict == {
-            'Antun': {'12/1/23': {GameMode.Classic: 1}, '12/2/23': {GameMode.Art: 2}}}
+            'Antun': {'12/1/23': {GameMode.Classic: 1, GameMode.Art: 2, GameMode.Keywords: 3, GameMode.Chessguessr: 4}}}
 
     def test_unify_dates(self):
         master_dict_mock = {'Antun': {'9/11/22': {GameMode.Art: 1}, '12/1/23': {GameMode.Classic: 1}, '12/2/23': {GameMode.Art: 2}},

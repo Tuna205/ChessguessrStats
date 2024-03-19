@@ -3,7 +3,7 @@ from src.StatParser import GameMode, FAILED_TRY
 from datetime import datetime
 
 
-class TestFunStats:  # todo koristi game mode + fail tryes
+class TestFunStats:
     def setup_method(self, method):
         self.mock_master = {
             'Dino Ehman': {datetime(2023, 12, 4, 0, 0): {GameMode.Classic: 6, GameMode.Art: 5, GameMode.Keywords: FAILED_TRY, GameMode.Chessguessr: 1},

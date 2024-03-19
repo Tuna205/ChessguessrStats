@@ -1,8 +1,10 @@
 from datetime import timedelta
 import matplotlib.pyplot as plt
 from src.Utils import Utils
+from src.Constants import GameMode
 
 from matplotlib.widgets import Slider
+
 
 class GraphCreator:
 
@@ -16,15 +18,11 @@ class GraphCreator:
         for player, df in df_dict.items():
             rect = ax.bar(df.index + day_width * i - day_width/2,
                           df[game_mode], label=player, width=width)
-            ax.bar_label(rect, label_type='edge')
-            # ax.set_xlim(Utils.to_date('3/08/24') - day_width, Utils.to_date('3/15/24') + day_width)
             i += 1
 
         plt.title(game_mode)
         ax.set_xlabel('Date')
         ax.set_ylabel('Tries')
-
-        # fig.set_figwidth(10000)
 
         return (fig, ax)
 
@@ -42,11 +40,15 @@ class GraphCreator:
         plt.title(game_mode)
         ax.set_xlabel('Num of Tries')
 
+        if game_mode == GameMode.Chessguessr:
+            ax.legend()
+
         return (fig, ax)
 
     @staticmethod
     def create_total_tries_graph(df):
         ax = df.plot.barh()
+        ax.legend().set_visible(False)
         for container in ax.containers:
             ax.bar_label(container)
         fig = ax.get_figure()
@@ -58,6 +60,7 @@ class GraphCreator:
     @staticmethod
     def create_streaks_graph(df):
         ax = df.plot.barh()
+        ax.legend().set_visible(False)
         for container in ax.containers:
             ax.bar_label(container)
         fig = ax.get_figure()

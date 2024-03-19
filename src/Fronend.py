@@ -15,6 +15,7 @@ class MplCanvas(FigureCanvasQTAgg):
         super(MplCanvas, self).__init__(fig)
         self.axes = ax
 
+
 class MainWindow(QtWidgets.QMainWindow):
 
     def __init__(self, master_dict, *args, **kwargs):
@@ -33,7 +34,8 @@ class MainWindow(QtWidgets.QMainWindow):
         scroll_area.setWidgetResizable(True)
         scroll_area.setWidget(root)
         scroll_area.adjustSize()
-        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
+        scroll_area.setVerticalScrollBarPolicy(
+            Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
         scroll_area.setFixedHeight(1440)
         scroll_area.setFixedWidth(2560)
 
@@ -93,14 +95,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         layout = QtWidgets.QVBoxLayout()
         layout.addWidget(classic_canvas)
-        # classic_scroll = QScrollArea(daily_wgt)
-        # classic_scroll.setWidget(classic_canvas)
-        # layout.addWidget(classic_scroll)
-
         layout.addWidget(art_canvas)
         layout.addWidget(keyword_canvas)
         layout.addWidget(chessguessr_canvas)
-
 
         daily_wgt.setLayout(layout)
 
@@ -113,7 +110,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
         num_tries_plot_classic = GraphCreator.create_num_tries_graph(
             GameMode.Classic, df_dict_tries)
-        num_tries_canvas_classic = MplCanvas(*num_tries_plot_classic, num_of_tries_wgt)
+        num_tries_canvas_classic = MplCanvas(
+            *num_tries_plot_classic, num_of_tries_wgt)
 
         num_tries_plot_art = GraphCreator.create_num_tries_graph(
             GameMode.Art, df_dict_tries)
@@ -121,7 +119,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
         num_tries_plot_keywords = GraphCreator.create_num_tries_graph(
             GameMode.Keywords, df_dict_tries)
-        num_tries_canvas_keywords = MplCanvas(*num_tries_plot_keywords, num_of_tries_wgt)
+        num_tries_canvas_keywords = MplCanvas(
+            *num_tries_plot_keywords, num_of_tries_wgt)
 
         num_tries_plot_chessguessr = GraphCreator.create_num_tries_graph(
             GameMode.Chessguessr, df_dict_tries)
