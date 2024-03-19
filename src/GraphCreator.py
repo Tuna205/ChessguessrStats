@@ -38,7 +38,8 @@ class GraphCreator:
             i += 1
 
         plt.title(game_mode)
-        ax.set_xlabel('Num of Tries')
+        ax.set_xlabel('Count')
+        ax.set_ylabel('Tries')
 
         if game_mode == GameMode.Chessguessr:
             ax.legend()

@@ -45,7 +45,7 @@ class MainWindow(QtWidgets.QMainWindow):
             f"Days played : {self.fun_stats.days_played()}")
         layout.addWidget(days_played_label)
 
-        num_of_tries_title = QLabel("Number of tries:", self)
+        num_of_tries_title = QLabel("Try count:", self)
         layout.addWidget(num_of_tries_title)
         num_of_tries_wgt = self.create_num_of_tries_widget()
         num_of_tries_wgt.setFixedHeight = 500
