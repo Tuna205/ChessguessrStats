@@ -1,6 +1,8 @@
 from datetime import timedelta
 import matplotlib.pyplot as plt
+from src.Utils import Utils
 
+from matplotlib.widgets import Slider
 
 class GraphCreator:
 
@@ -15,11 +17,14 @@ class GraphCreator:
             rect = ax.bar(df.index + day_width * i - day_width/2,
                           df[game_mode], label=player, width=width)
             ax.bar_label(rect, label_type='edge')
+            # ax.set_xlim(Utils.to_date('3/08/24') - day_width, Utils.to_date('3/15/24') + day_width)
             i += 1
 
         plt.title(game_mode)
         ax.set_xlabel('Date')
         ax.set_ylabel('Tries')
+
+        # fig.set_figwidth(10000)
 
         return (fig, ax)
 

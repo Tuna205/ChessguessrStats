@@ -15,7 +15,6 @@ class MplCanvas(FigureCanvasQTAgg):
         super(MplCanvas, self).__init__(fig)
         self.axes = ax
 
-
 class MainWindow(QtWidgets.QMainWindow):
 
     def __init__(self, master_dict, *args, **kwargs):
@@ -94,11 +93,14 @@ class MainWindow(QtWidgets.QMainWindow):
 
         layout = QtWidgets.QVBoxLayout()
         layout.addWidget(classic_canvas)
+        # classic_scroll = QScrollArea(daily_wgt)
+        # classic_scroll.setWidget(classic_canvas)
+        # layout.addWidget(classic_scroll)
+
         layout.addWidget(art_canvas)
         layout.addWidget(keyword_canvas)
         layout.addWidget(chessguessr_canvas)
 
-        # daily_wgt.setFixedHeight = 1000
 
         daily_wgt.setLayout(layout)
 
@@ -134,7 +136,6 @@ class MainWindow(QtWidgets.QMainWindow):
         layout.addWidget(num_tries_canvas_chessguessr)
 
         num_of_tries_wgt.setLayout(layout)
-        # num_of_tries_wgt.setFixedHeight = 1000
 
         return num_of_tries_wgt
 
@@ -143,7 +144,6 @@ class MainWindow(QtWidgets.QMainWindow):
         df_total_try = Utils.create_total_tries_dataframe(total_tries)
         total_tries_plot = GraphCreator.create_total_tries_graph(df_total_try)
         total_tries_wgt = MplCanvas(*total_tries_plot, self)
-        # total_tries_wgt.setFixedHeight = 1000
 
         return total_tries_wgt
 
@@ -152,6 +152,5 @@ class MainWindow(QtWidgets.QMainWindow):
         df_streaks = Utils.create_streaks_dataframe(streaks)
         streaks_plot = GraphCreator.create_streaks_graph(df_streaks)
         streaks_wgt = MplCanvas(*streaks_plot, self)
-        # streaks_wgt.setFixedHeight = 1000
 
         return streaks_wgt
