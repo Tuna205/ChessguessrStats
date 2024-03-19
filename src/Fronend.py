@@ -3,9 +3,8 @@ from src.GraphCreator import GraphCreator
 from src.Constants import GameMode
 from src.Utils import Utils
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg
-from PyQt6 import QtCore, QtWidgets
-from PyQt6.QtWidgets import QLabel, QScrollArea
-from PyQt6.QtCore import Qt
+from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtWidgets import QSizePolicy, QLabel, QScrollArea
 import matplotlib
 
 
@@ -34,13 +33,12 @@ class MainWindow(QtWidgets.QMainWindow):
         scroll_area.setWidgetResizable(True)
         scroll_area.setWidget(root)
         scroll_area.adjustSize()
-        scroll_area.setVerticalScrollBarPolicy(
-            Qt.ScrollBarPolicy.ScrollBarAlwaysOn)
+        scroll_area.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         scroll_area.setFixedHeight(1440)
         scroll_area.setFixedWidth(2560)
 
         main_title = QLabel("Game Stats")
-        main_title.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        main_title.setAlignment(QtCore.Qt.AlignCenter)
         layout.addWidget(main_title)
 
         days_played_label = QLabel(

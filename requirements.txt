@@ -1,5 +1,5 @@
 pandas
 matplotlib
-PyQt6
 xlsxwriter
 pytest
+PyQt5
