@@ -79,6 +79,7 @@ class MainWindow(QtWidgets.QMainWindow):
         classic_plot = GraphCreator.create_game_mode_graph(
             GameMode.Classic, df_dict)
         art_plot = GraphCreator.create_game_mode_graph(GameMode.Art, df_dict)
+        character_plot = GraphCreator.create_game_mode_graph(GameMode.Character, df_dict)
         keyword_plot = GraphCreator.create_game_mode_graph(
             GameMode.Keywords, df_dict)
         chessguessr_plot = GraphCreator.create_game_mode_graph(
@@ -88,12 +89,14 @@ class MainWindow(QtWidgets.QMainWindow):
 
         classic_canvas = MplCanvas(*classic_plot, daily_wgt)
         art_canvas = MplCanvas(*art_plot, daily_wgt)
+        character_canvas = MplCanvas(*character_plot, daily_wgt)
         keyword_canvas = MplCanvas(*keyword_plot, daily_wgt)
         chessguessr_canvas = MplCanvas(*chessguessr_plot, daily_wgt)
 
         layout = QtWidgets.QVBoxLayout()
         layout.addWidget(classic_canvas)
         layout.addWidget(art_canvas)
+        layout.addWidget(character_canvas)
         layout.addWidget(keyword_canvas)
         layout.addWidget(chessguessr_canvas)
 
@@ -115,6 +118,10 @@ class MainWindow(QtWidgets.QMainWindow):
             GameMode.Art, df_dict_tries)
         num_tries_canvas_art = MplCanvas(*num_tries_plot_art, num_of_tries_wgt)
 
+        num_tries_plot_character = GraphCreator.create_num_tries_graph(
+            GameMode.Character, df_dict_tries)
+        num_tries_canvas_character = MplCanvas(*num_tries_plot_character, num_of_tries_wgt)
+
         num_tries_plot_keywords = GraphCreator.create_num_tries_graph(
             GameMode.Keywords, df_dict_tries)
         num_tries_canvas_keywords = MplCanvas(
@@ -129,6 +136,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         layout.addWidget(num_tries_canvas_classic)
         layout.addWidget(num_tries_canvas_art)
+        layout.addWidget(num_tries_canvas_character)
         layout.addWidget(num_tries_canvas_keywords)
         layout.addWidget(num_tries_canvas_chessguessr)
 

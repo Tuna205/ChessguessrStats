@@ -3,6 +3,7 @@ class GameMode():
     Art = 'Art'
     Keywords = 'Keywords'
     Chessguessr = 'Chessguessr'
+    Character = 'Character'
 
 
 FAILED_TRY = 10

@@ -40,12 +40,14 @@ class StatParser:
             return None
 
     def parse_gamedle_line(self, line):
-        if ('🕹️ Gamedle:' in line):
+        if ('🕹️ Gamedle:' in line or '🕹️ (Cover art):' in line):
             return GameMode.Classic
-        elif ('🕹️🎨 Gamedle (Artwork mode):' in line):
+        elif ('🕹️🎨 Gamedle (Artwork mode):' in line or '🎨 (Artwork):' in line):
             return GameMode.Art
-        elif ('🕹️🔑 Gamedle (keywords mode):' in line):
+        elif ('🕹️🔑 Gamedle (keywords mode):' in line or '🔑 (Keywords):' in line):
             return GameMode.Keywords
+        elif ('🕹️👤 Gamedle (characters):' in line or '🕹️ Gamedle (Character mode):' in line or '👤 (Character):' in line):
+            return GameMode.Character
         else:
             return None
 
@@ -83,7 +85,7 @@ class StatParser:
         for_deletion = []
         for player, sub_dict in self.master_dict.items():
             for date, scores in sub_dict.items():
-                if scores == {} or len(scores) != 4:
+                if scores == {} or len(scores) < 4:
                     for_deletion.append((player, date))
 
         for player, date in for_deletion:
@@ -104,6 +106,7 @@ class StatParser:
                     sub_dict[date] = {GameMode.Classic: FAILED_TRY,
                                       GameMode.Art: FAILED_TRY,
                                       GameMode.Keywords: FAILED_TRY,
+                                      GameMode.Character: FAILED_TRY,
                                       GameMode.Chessguessr: FAILED_TRY}
 
     def parse_chessguessr_line(self, line):

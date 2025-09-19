@@ -10,6 +10,7 @@ class FunStats:
         return {GameMode.Classic: {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, FAILED_TRY: 0},
                 GameMode.Art: {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, FAILED_TRY: 0},
                 GameMode.Keywords: {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, FAILED_TRY: 0},
+                GameMode.Character: {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, FAILED_TRY: 0},
                 GameMode.Chessguessr: {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, FAILED_TRY: 0}, }
 
     def number_of_tries(self):
@@ -26,6 +27,7 @@ class FunStats:
         return {GameMode.Classic: 0,
                 GameMode.Art: 0,
                 GameMode.Keywords: 0,
+                GameMode.Character: 0,
                 GameMode.Chessguessr: 0}
 
     def total_tries(self):
@@ -41,6 +43,7 @@ class FunStats:
         return {GameMode.Classic: [],
                 GameMode.Art: [],
                 GameMode.Keywords: [],
+                GameMode.Character: [],
                 GameMode.Chessguessr: []}
 
     def top_streak(self):  # chessguessr first try, gamedle before fail
